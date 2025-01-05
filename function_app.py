@@ -44,7 +44,7 @@ def open311_api(req: func.HttpRequest) -> func.HttpResponse:
                        .from_connection_string(connection_string)
                        .get_blob_client(container=blob_container, blob=file_name))
     except Exception as e:
-        return func.HttpResponse(f'Error connecting to blob service: \n{e}', status_code=500)
+        return func.HttpResponse(f'Error connecting to blob service: \n{e}\n{connection_string}', status_code=500)
 
     parameters = {
         "extensions": extensions,
