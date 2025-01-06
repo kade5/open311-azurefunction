@@ -66,7 +66,7 @@ def open311_api(req: func.HttpRequest) -> func.HttpResponse:
     output_file = BytesIO(json.dumps(data).encode())
     response_body = {
         "result_count": num_rows,
-        "next_page": page + 1
+        "next_page": int(page) + 1
     }
 
     if num_rows > 0:
