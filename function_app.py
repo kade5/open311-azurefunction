@@ -65,11 +65,15 @@ def open311_api(req: func.HttpRequest) -> func.HttpResponse:
     num_rows = len(data)
     output_file = BytesIO(json.dumps(data).encode())
     response_body = {
-        "result_count": num_rows
+        "result_count": num_rows,
+        "next_page": page + 1
     }
 
     if num_rows > 0:
-        blob_client.upload_blob(output_file, overwrite=True)
+        try:
+            blob_client.upload_blob(output_file, overwrite=True)
+        except Exception as e:
+            return func.HttpResponse(f'Failed to upload to blob storage:\n{e}', status_code=500)
         logging.info(f"{blob_container}/{file_name} with {num_rows} rows successfully uploaded to blob storage.")
     else:
         logging.info("Skipping. No more rows to upload")
