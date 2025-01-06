@@ -69,7 +69,7 @@ def open311_api(req: func.HttpRequest) -> func.HttpResponse:
     }
 
     if num_rows > 0:
-        blob_client.upload_blob(output_file)
+        blob_client.upload_blob(output_file, overwrite=True)
         logging.info(f"{blob_container}/{file_name} with {num_rows} rows successfully uploaded to blob storage.")
     else:
         logging.info("Skipping. No more rows to upload")
